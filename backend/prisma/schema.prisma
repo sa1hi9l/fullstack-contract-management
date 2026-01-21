@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum FieldType {
+  TEXT
+  DATE
+  SIGNATURE
+  CHECKBOX
+}
+
+enum ContractStatus {
+  CREATED
+  APPROVED
+  SENT
+  SIGNED
+  LOCKED
+  REVOKED
+}
+
+model Blueprint {
+  id        String           @id @default(uuid())
+  name      String
+  fields    BlueprintField[]
+  contracts Contract[] // 👈 opposite relation
+  createdAt DateTime         @default(now())
+}
+
+model BlueprintField {
+  id             String          @id @default(uuid())
+  blueprintId    String
+  type           FieldType
+  label          String
+  positionX      Int
+  positionY      Int
+  contractFields ContractField[] // 👈 opposite relation
+
+  blueprint Blueprint @relation(fields: [blueprintId], references: [id], onDelete: Cascade)
+}
+
+model Contract {
+  id          String          @id @default(uuid())
+  name        String
+  blueprintId String
+  status      ContractStatus  @default(CREATED)
+  fields      ContractField[]
+  createdAt   DateTime        @default(now())
+
+  blueprint Blueprint @relation(fields: [blueprintId], references: [id])
+}
+
+model ContractField {
+  id               String  @id @default(uuid())
+  contractId       String
+  blueprintFieldId String
+  value            String?
+
+  contract       Contract       @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  blueprintField BlueprintField @relation(fields: [blueprintFieldId], references: [id])
+}
