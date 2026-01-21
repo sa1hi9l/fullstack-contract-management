@@ -9,7 +9,7 @@ export default function App() {
   );
 
   return (
-    <div>
+    <div style={{ maxWidth: 1100, margin: "0 auto", padding: 20 }}>
       <nav style={{ padding: 10 }}>
         <button onClick={() => setPage("dashboard")}>Dashboard</button>
         <button onClick={() => setPage("blueprint")}>Create Blueprint</button>

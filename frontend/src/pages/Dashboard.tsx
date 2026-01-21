@@ -5,6 +5,42 @@ import {
 } from "../services/contractService";
 import type { Contract } from "../services/contractService";
 
+// STYLE FUNCTIONS
+const actionButtonStyle = {
+  padding: "6px 10px",
+  marginRight: 6,
+  border: "1px solid #ccc",
+  borderRadius: 4,
+  cursor: "pointer",
+  background: "#f8f9fa"
+};
+
+function StatusBadge({ status }: { status: string }) {
+  const colors: Record<string, string> = {
+    CREATED: "#999",
+    APPROVED: "#007bff",
+    SENT: "#6f42c1",
+    SIGNED: "#28a745",
+    LOCKED: "#343a40",
+    REVOKED: "#dc3545"
+  };
+
+  return (
+    <span
+      style={{
+        padding: "4px 8px",
+        borderRadius: 4,
+        color: "white",
+        background: colors[status] || "#999",
+        fontSize: 12
+      }}
+    >
+      {status}
+    </span>
+  );
+}
+// STYLE FUNCTIONS END
+
 type Filter = "ALL" | "ACTIVE" | "PENDING" | "SIGNED";
 
 export default function Dashboard() {
@@ -41,21 +77,17 @@ export default function Dashboard() {
   return (
     <div style={{ padding: 20 }}>
       <h2>Contract Dashboard</h2>
-
-      {/* Filters */}
       <div style={{ marginBottom: 16 }}>
         {["ALL", "PENDING", "ACTIVE", "SIGNED"].map(f => (
-          <button
+          <button style={actionButtonStyle}
             key={f}
             onClick={() => setFilter(f as Filter)}
-            style={{ marginRight: 8 }}
           >
             {f}
           </button>
         ))}
       </div>
 
-      {/* Table */}
       <table width="100%" border={1} cellPadding={8}>
         <thead>
           <tr>
@@ -72,13 +104,13 @@ export default function Dashboard() {
             <tr key={contract.id}>
               <td>{contract.name}</td>
               <td>{contract.blueprint.name}</td>
-              <td>{contract.status}</td>
+              <td><StatusBadge status={contract.status} /></td>
               <td>
                 {new Date(contract.createdAt).toLocaleDateString()}
               </td>
               <td>
                 {contract.status === "CREATED" && (
-                  <button
+                  <button style={actionButtonStyle}
                     onClick={() =>
                       handleStatusChange(contract.id, "APPROVED")
                     }
@@ -88,7 +120,7 @@ export default function Dashboard() {
                 )}
 
                 {contract.status === "APPROVED" && (
-                  <button
+                  <button style={actionButtonStyle}
                     onClick={() =>
                       handleStatusChange(contract.id, "SENT")
                     }
@@ -99,14 +131,14 @@ export default function Dashboard() {
 
                 {contract.status === "SENT" && (
                   <>
-                    <button
+                    <button style={actionButtonStyle}
                       onClick={() =>
                         handleStatusChange(contract.id, "SIGNED")
                       }
                     >
                       Sign
                     </button>
-                    <button
+                    <button style={actionButtonStyle}
                       onClick={() =>
                         handleStatusChange(contract.id, "REVOKED")
                       }
@@ -117,7 +149,7 @@ export default function Dashboard() {
                 )}
 
                 {contract.status === "SIGNED" && (
-                  <button
+                  <button style={actionButtonStyle}
                     onClick={() =>
                       handleStatusChange(contract.id, "LOCKED")
                     }
