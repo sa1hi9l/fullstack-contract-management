@@ -1,6 +1,7 @@
 import { prisma } from "../prisma";
 import { ContractStatus } from "@prisma/client";
 import { CONTRACT_TRANSITIONS } from "../constants/contractLifecycle";
+import type { BlueprintField } from "@prisma/client";
 
 interface CreateContractInput {
     name: string;
@@ -26,7 +27,7 @@ export async function createContract(data: CreateContractInput) {
       blueprintId: blueprint.id,
       status: ContractStatus.CREATED,
       fields: {
-        create: blueprint.fields.map(field => ({
+        create: blueprint.fields.map((field: BlueprintField) => ({
           blueprintFieldId: field.id,
           value: null
         }))
@@ -96,5 +97,20 @@ export async function changeContractStatus(
   return prisma.contract.update({
     where: { id: contractId },
     data: { status: newStatus }
+  });
+}
+
+export async function deleteContract(id: string) {
+  const contract = await prisma.contract.findUnique({
+    where: { id }
+  });
+    if (!contract) {
+    throw new Error("Contract not found");
+  }
+  if (contract.status !== ContractStatus.CREATED) {
+    throw new Error("Only CREATED contracts can be deleted");
+  }
+  await prisma.contract.delete({
+    where: { id }
   });
 }
