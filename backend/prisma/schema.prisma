@@ -27,7 +27,7 @@ model Blueprint {
   id        String           @id @default(uuid())
   name      String
   fields    BlueprintField[]
-  contracts Contract[] // 👈 opposite relation
+  contracts Contract[] 
   createdAt DateTime         @default(now())
 }
 
@@ -38,7 +38,7 @@ model BlueprintField {
   label          String
   positionX      Int
   positionY      Int
-  contractFields ContractField[] // 👈 opposite relation
+  contractFields ContractField[] 
 
   blueprint Blueprint @relation(fields: [blueprintId], references: [id], onDelete: Cascade)
 }
@@ -51,7 +51,7 @@ model Contract {
   fields      ContractField[]
   createdAt   DateTime        @default(now())
 
-  blueprint Blueprint @relation(fields: [blueprintId], references: [id])
+  blueprint Blueprint @relation(fields: [blueprintId], references: [id], onDelete: Cascade)
 }
 
 model ContractField {
@@ -61,5 +61,5 @@ model ContractField {
   value            String?
 
   contract       Contract       @relation(fields: [contractId], references: [id], onDelete: Cascade)
-  blueprintField BlueprintField @relation(fields: [blueprintFieldId], references: [id])
+  blueprintField BlueprintField @relation(fields: [blueprintFieldId], references: [id], onDelete: Cascade)
 }

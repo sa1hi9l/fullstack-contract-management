@@ -92,7 +92,7 @@ export default function Dashboard() {
         <thead>
           <tr>
             <th>Contract Name</th>
-            <th>Blueprint</th>
+            <th>Blueprint Name</th>
             <th>Status</th>
             <th>Created</th>
             <th>Actions</th>

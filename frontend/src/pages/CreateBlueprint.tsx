@@ -42,7 +42,7 @@ export default function CreateBlueprint() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>Create Blueprint</h2>
+      <h2>Create a Blueprint Template</h2>
 
       <input
         placeholder="Blueprint name"
