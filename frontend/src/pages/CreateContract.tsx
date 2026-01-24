@@ -14,13 +14,13 @@ export default function CreateContract() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:4000/blueprints").then(res => {
+        axios.get("https://fullstack-contract-management.onrender.com/blueprints").then(res => {
             setBlueprints(res.data);
         });
     }, []);
 
     async function createContract() {
-        await axios.post("http://localhost:4000/contracts", {
+        await axios.post("https://fullstack-contract-management.onrender.com/contracts", {
         name,
         blueprintId
         });
@@ -48,7 +48,7 @@ export default function CreateContract() {
                 setBlueprintId(id);
                 if (id) {
                     const res = await axios.get(
-                        `http://localhost:4000/blueprints/${id}`
+                        `https://fullstack-contract-management.onrender.com/blueprints/${id}`
                     );
                     setBlueprintFields(res.data.fields);
                 } else {

@@ -1,6 +1,7 @@
 import { prisma } from "../prisma";
 import { ContractStatus } from "@prisma/client";
 import { CONTRACT_TRANSITIONS } from "../constants/contractLifecycle";
+import type { BlueprintField } from "@prisma/client";
 
 interface CreateContractInput {
     name: string;
@@ -26,7 +27,7 @@ export async function createContract(data: CreateContractInput) {
       blueprintId: blueprint.id,
       status: ContractStatus.CREATED,
       fields: {
-        create: blueprint.fields.map(field => ({
+        create: blueprint.fields.map((field: BlueprintField) => ({
           blueprintFieldId: field.id,
           value: null
         }))

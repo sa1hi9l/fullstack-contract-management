@@ -3,7 +3,7 @@ import {
     createContract,
     getAllContracts,
     getContractById,
-    changeContractStatus
+    changeContractStatus,
 } from "../controllers/contract.controller";
 
 const router = Router();
