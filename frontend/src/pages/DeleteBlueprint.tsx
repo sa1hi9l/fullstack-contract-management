@@ -46,7 +46,7 @@ export default function DeleteBlueprint() {
     return (
         <div style={{ padding: 20 }}>
             <h2>Delete Blueprint</h2>
-            <p>Note: only Bluprints that are not in use can be deleted!</p>
+            <p>Note: Deleting Bluprints that are used by a contract will delete that contract too!</p>
             <br/>
             <select
                 value={selectedId}
