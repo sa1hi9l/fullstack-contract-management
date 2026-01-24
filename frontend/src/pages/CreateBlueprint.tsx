@@ -31,7 +31,7 @@ export default function CreateBlueprint() {
   }
 
   async function saveBlueprint() {
-    await axios.post("http://localhost:4000/blueprints", {
+    await axios.post("https://fullstack-contract-management.onrender.com/blueprints", {
       name,
       fields
     });
