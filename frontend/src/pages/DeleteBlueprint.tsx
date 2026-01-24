@@ -15,7 +15,7 @@ export default function DeleteBlueprint() {
     }, []);
 
     async function fetchBlueprints() {
-        const res = await axios.get("http://localhost:4000/blueprints");
+        const res = await axios.get("https://fullstack-contract-management.onrender.com/blueprints");
         setBlueprints(res.data);
     }
 
@@ -32,7 +32,7 @@ export default function DeleteBlueprint() {
         try{
             setLoading(true);
             await axios.delete(
-                `http://localhost:4000/blueprints/${selectedId}`
+                `https://fullstack-contract-management.onrender.com/blueprints/${selectedId}`
             );
             alert("Blueprint Deleted");
             setSelectedId("");

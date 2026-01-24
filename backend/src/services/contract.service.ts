@@ -99,18 +99,3 @@ export async function changeContractStatus(
     data: { status: newStatus }
   });
 }
-
-export async function deleteContract(id: string) {
-  const contract = await prisma.contract.findUnique({
-    where: { id }
-  });
-    if (!contract) {
-    throw new Error("Contract not found");
-  }
-  if (contract.status !== ContractStatus.CREATED) {
-    throw new Error("Only CREATED contracts can be deleted");
-  }
-  await prisma.contract.delete({
-    where: { id }
-  });
-}
