@@ -84,7 +84,7 @@ export default function CreateContract() {
                     )}
 
                     {field.type === "SIGNATURE" && (
-                        <input placeholder="Signature" disabled />
+                        <input placeholder="Please Enter Full Name" />
                     )}
                 </div>
                 ))}
